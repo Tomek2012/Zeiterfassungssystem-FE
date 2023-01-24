@@ -1,0 +1,22 @@
+.sidenav-container {
+    height: 100%;
+  }
+  
+  /* .drawer-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  } */
+  
+  .sidenav-menu {
+   width: 10%;
+   background-color:dodgerblue;
+  }
+
+  .example-spacer {
+    width: 100%;
+  }
+  .header-menu {
+    background-color:dodgerblue;
+  }
