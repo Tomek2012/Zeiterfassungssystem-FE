@@ -1,19 +1,33 @@
-<!-- Header einbauen (mit Login und so) -->
+<!-- Header for navigation and login-->
 <mat-toolbar class="header-menu">
-    <button mat-icon-button class="menu-icon" aria-label="menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>My App</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
-  </mat-toolbar>
+  <button mat-icon-button class="menu-icon" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>ClockMaster24</span>
+  <span><mat-icon class="time-icon">more_time</mat-icon></span>
+  <span class="example-spacer"></span>
+  <!-- TODO: Icon gegen Login tauschen -->
+  <button mat-icon-button class="example-icon">
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container" autosize>
-  <mat-sidenav class="sidenav-menu" mode="side" opened="isOpen">
-    <!-- Navigation (Home, Zeiterfassung, usw) abhaengig von Authentifikation -->
-    <p>Test</p>
+  <mat-sidenav #sidenav class="sidenav-menu" mode="side" opened>
+    <mat-nav-list>
+      <!-- Navigation (Home, Zeiterfassung, usw) abhaengig von Authentifikation -->
+      <mat-list-item routerLink="/home" routerLinkActive="active">
+        <span class="menu-item">
+          <mat-icon class="home-icon">home</mat-icon>Startseite</span
+        >
+      </mat-list-item>
+
+      <mat-list-item routerLink="/timetracking" routerLinkActive="active">
+        <span class="menu-item">
+          <mat-icon class="home-icon">schedule</mat-icon>Zeiterfassung</span
+        >
+      </mat-list-item>
+    </mat-nav-list>
   </mat-sidenav>
 
   <div class="sidenav-content">
