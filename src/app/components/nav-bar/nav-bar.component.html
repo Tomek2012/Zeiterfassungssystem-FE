@@ -1,13 +1,17 @@
-<!-- <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
-    <button
-      (click)="
-        auth.logout({ logoutParams: { returnTo: document.location.origin } })
-      "
-    >
-      Log out
-    </button>
-  </ng-container>
-  
-  <ng-template #loggedOut>
-    <button (click)="auth.loginWithRedirect()">Log in</button>
-  </ng-template> -->
+<!-- Header for navigation and login-->
+<mat-toolbar class="header-menu">
+  <button mat-icon-button class="menu-icon" (click)="inputSideNav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>ClockMaster24</span>
+  <span><mat-icon class="time-icon">more_time</mat-icon></span>
+  <span class="example-spacer"></span>
+  <button
+    mat-raised-button
+    class="login-button"
+    (click)="login()"
+  >
+    <mat-icon class="login-icon">login</mat-icon>
+    <span>Login</span>
+  </button>
+</mat-toolbar>
