@@ -3,7 +3,7 @@
 }
 
 .sidenav-menu {
-  width: 10%;
+  /* width: 11%; */
   background-color: #f4f3f3;
 }
 
@@ -20,4 +20,12 @@
 
 .mat-list-item.active {
   color: red;
+}
+
+.info-icon {
+  margin-top: 8px;
+  margin-left: 5px;
+  position: relative;
+  top: 4px;
+  transform: scale(0.8);
 }

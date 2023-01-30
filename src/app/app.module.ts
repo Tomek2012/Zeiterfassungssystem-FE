@@ -5,14 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { TimetrackingComponent } from './pages/timetracking/timetracking.component';
+import { WorkpackageComponent } from './pages/workpackage/workpackage.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -37,6 +40,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     TimetrackingComponent,
     HomeComponent,
     NavBarComponent,
+    WorkpackageComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatButtonModule,
     MatListModule,
     KeycloakAngularModule,
+    MatMenuModule,
+    MatTooltipModule,
   ],
   providers: [
     {

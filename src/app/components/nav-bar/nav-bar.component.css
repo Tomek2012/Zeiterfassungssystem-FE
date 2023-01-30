@@ -9,11 +9,27 @@
   top: 4px;
 }
 
-.example-spacer {
+/* .example-spacer {
   width: 85%;
-}
+} */
 
 .login-button {
   padding: 0;
   width: 90px;
+  position: absolute;
+  right: 20px;
+}
+
+.profile-button {
+  padding: 0;
+  position: absolute;
+  right: 20px;
+}
+
+.account-icon {
+  transform: scale(2);
+}
+
+.account-name {
+  margin-left: 5px;
 }

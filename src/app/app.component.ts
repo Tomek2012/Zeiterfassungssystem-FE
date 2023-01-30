@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor() {}
+  public isLoggedIn = false;
+  public isUserAllowed = false;
 
-  ngOnInit() {}
+  constructor(public keycloakService: KeycloakService) {}
+
+  ngOnInit() {
+    this.isUserAuthorized();
+  }
+
+  async isUserAuthorized() {
+    this.isLoggedIn = await this.keycloakService.isLoggedIn();
+    this.isUserAllowed = this.keycloakService.isUserInRole(
+      'time_administration'
+    );
+  }
 }

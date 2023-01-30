@@ -10,10 +10,12 @@ import { KeycloakService } from 'keycloak-angular';
 export class NavBarComponent implements OnInit {
   @Input() inputSideNav!: MatSidenav;
 
-  constructor(private keycloakService: KeycloakService) {}
+  public isLoggedIn = false;
+
+  constructor(public keycloakService: KeycloakService) {}
 
   ngOnInit() {
-    // this.isUserAuthorized();
+    this.isUserAuthorized();
   }
 
   login() {
@@ -21,14 +23,14 @@ export class NavBarComponent implements OnInit {
   }
 
   logout() {
-    this.keycloakService.logout('http://localhost:4200/home');
+    this.keycloakService.logout('http://localhost:4200/');
   }
 
-  // TODO: Wie?
-  // async isUserAuthorized(): Promise<boolean> {
-  //   this.keycloakService.isLoggedIn().then((value) => {
-  //     //this return will `return` value in chained manner
-  //     return value ? true : false;
-  //   });
-  // }
+  async isUserAuthorized() {
+    this.isLoggedIn = await this.keycloakService.isLoggedIn();
+  }
+
+  getUserInformation(): string {
+    return this.keycloakService.getUsername();
+  }
 }
