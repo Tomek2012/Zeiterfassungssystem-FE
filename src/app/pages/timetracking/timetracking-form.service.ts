@@ -66,11 +66,23 @@ export class TimetrackingFormService {
 
   public calculateTotalTime(startTime: Date, endTime: Date): string {
     var diff = endTime.getTime() - startTime.getTime();
-    var seconds = diff / 1000;
-    var minutes = seconds / 60;
-    var hours = minutes / 60;
+    var minutes = Math.floor(diff / 1000 / 60);
+    var hours = Math.floor(minutes / 60);
+    var total;
 
-    var total = hours.toString() + ':' + minutes.toString()
+    if (minutes % 60 === 0) {
+      if (hours < 10) {
+        total = '0' + hours.toString() + ':' + '00';
+      } else {
+        total = hours.toString() + ':' + '00';
+      }
+    } else {
+      if (hours < 10) {
+        total = '0' + hours.toString() + ':' + minutes.toString();
+      } else {
+        total = hours.toString() + ':' + minutes.toString();
+      }
+    }
     return total;
   }
 }

@@ -2,7 +2,7 @@
   background-color: #ffffff;
   border: 0.1px solid lightgray;
   border-radius: 5px;
-  width: 98%;
+  width: 95%;
   display: inline-block;
 }
 
@@ -10,13 +10,6 @@
   margin-top: 10px;
   margin: 1%;
   width: 113px;
-  /* scale: 0.8; */
-}
-
-.toTime-form-field {
-  /* margin-right: 1%; */
-  width: 113px;
-  /* scale: 0.8; */
 }
 
 .workpackage-form-field {
@@ -27,6 +20,9 @@
   width: 40%;
 }
 
-.add-button {
-  background-color: #353535;
+.delete-button {
+  margin-top: 18px;
+  margin-right: 1%;
+  float: right;
+  background-color: #F44A3E;
 }
