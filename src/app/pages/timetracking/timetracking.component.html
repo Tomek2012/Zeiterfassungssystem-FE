@@ -1,1 +1,6 @@
-<p>timetracking works!</p>
+<div class="time-container">
+  <h2>Zeiten erfassen</h2>
+  <ng-container *ngFor="let time of getTimetrackingList(); let i = index">
+    <app-time-bar [form]="time"></app-time-bar>
+  </ng-container>
+</div>

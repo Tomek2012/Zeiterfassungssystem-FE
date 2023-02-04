@@ -1,0 +1,42 @@
+<div class="timebar-component">
+  <form [formGroup]="form">
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Von</mat-label>
+      <input matInput type="time" formControlName="timeFrom" />
+    </mat-form-field>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Bis</mat-label>
+      <input matInput type="time" formControlName="timeTo" />
+    </mat-form-field>
+    <mat-form-field
+      class="workpackage-form-field form-field"
+      appearance="outline"
+    >
+      <mat-label>Arbeitspaket</mat-label>
+      <mat-select formControlName="workpackage">
+        <mat-option *ngFor="let package of workpackage" [value]="package.value">
+          {{ package.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field
+      class="description-form-field form-field"
+      hintLabel="Max. 256 Buchstaben"
+      appearance="outline"
+    >
+      <mat-label>Füge eine Beschreibung hinzu</mat-label>
+      <input
+        matInput
+        #input
+        maxlength="256"
+        placeholder="Bemerkung"
+        formControlName="description"
+      />
+      <mat-hint align="end">{{ input.value.length }}/256</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Gesamt</mat-label>
+      <input matInput type="time" formControlName="total" />
+    </mat-form-field>
+  </form>
+</div>

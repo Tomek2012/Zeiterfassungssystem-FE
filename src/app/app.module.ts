@@ -2,10 +2,14 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -13,9 +17,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { TimeBarComponent } from './components/time-bar/time-bar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { TimetrackingComponent } from './pages/timetracking/timetracking.component';
 import { WorkpackageComponent } from './pages/workpackage/workpackage.component';
+import { DatePipe } from '@angular/common';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -41,6 +47,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     NavBarComponent,
     WorkpackageComponent,
+    TimeBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +61,11 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     MatMenuModule,
     MatTooltipModule,
+    MatInputModule,
+    FormsModule,
+    MatSelectModule,
+    MatDividerModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
@@ -62,6 +74,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true,
       deps: [KeycloakService],
     },
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

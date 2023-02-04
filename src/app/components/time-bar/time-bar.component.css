@@ -1,0 +1,32 @@
+.timebar-component {
+  background-color: #ffffff;
+  border: 0.1px solid lightgray;
+  border-radius: 5px;
+  width: 98%;
+  display: inline-block;
+}
+
+.form-field {
+  margin-top: 10px;
+  margin: 1%;
+  width: 113px;
+  /* scale: 0.8; */
+}
+
+.toTime-form-field {
+  /* margin-right: 1%; */
+  width: 113px;
+  /* scale: 0.8; */
+}
+
+.workpackage-form-field {
+  width: auto;
+}
+
+.description-form-field {
+  width: 40%;
+}
+
+.add-button {
+  background-color: #353535;
+}
