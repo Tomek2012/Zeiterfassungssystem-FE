@@ -1,6 +1,44 @@
 <div class="time-container">
-  <h2>Zeiten erfassen</h2>
-  <ng-container *ngFor="let time of getTimetrackingList(); let i = index">
-    <app-time-bar [form]="time"></app-time-bar>
-  </ng-container>
+  <form [formGroup]="form">
+    <div class="date-container">
+      <h1>
+        Zeiten erfassen ({{
+          form.controls["date"].value | date : "dd.MM.YYYY"
+        }})
+      </h1>
+      <div class="datepicker">
+        <button mat-icon-button (click)="lastDay()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-form-field appearance="outline">
+          <mat-label>Datum</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <button mat-icon-button (click)="nextDay()">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-card class="time-card">
+      <mat-card-header class="time-card-header">
+        <mat-divider></mat-divider>
+        <mat-card-title align="end">Insgesamt: {{ total }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ng-container *ngFor="let time of getTimetrackingList(); let i = index">
+          <app-time-bar [form]="time" [index]="i"></app-time-bar>
+        </ng-container>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="add-button" mat-icon-button (click)="createTimetrack()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
 </div>

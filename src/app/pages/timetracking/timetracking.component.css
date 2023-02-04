@@ -1,3 +1,22 @@
 .time-container {
   margin-left: 20px;
 }
+
+.date-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.time-card {
+  background-color: #e4eaee;
+  width: 98.8%;
+}
+
+.time-card-header {
+  margin-bottom: 20px;
+}
+
+.datepicker {
+  margin-right: 1%;
+}

@@ -7,9 +7,15 @@ import { Timetrackings } from 'src/app/models/timetrackings';
   providedIn: 'root',
 })
 export class TimetrackingFormService {
+  total: number = 0;
+
   constructor(private datePipe: DatePipe) {}
 
   private timetrackingFormGroup = new FormGroup({
+    date: new FormControl({
+      value: new Date(),
+      disabled: true,
+    }),
     timetracking: new FormArray([
       new FormGroup({
         timeFrom: new FormControl('', Validators.required),
@@ -30,7 +36,10 @@ export class TimetrackingFormService {
   }
 
   public fillFormValuesForTimetracking(timetrackings: Array<Timetrackings>) {
+    this.total = 0;
     timetrackings.forEach((timetrackings, index) => {
+      this.total +=
+        timetrackings.toTime.getTime() - timetrackings.fromTime.getTime();
       if (!this.getTimetrackingList().controls[index]) {
         this.addNewTimeTracking(index - 1);
       }
@@ -40,8 +49,7 @@ export class TimetrackingFormService {
         workpackage: timetrackings.workingspackage.value,
         description: timetrackings.description,
         total: this.calculateTotalTime(
-          timetrackings.fromTime,
-          timetrackings.toTime
+          timetrackings.toTime.getTime() - timetrackings.fromTime.getTime()
         ),
       });
     });
@@ -60,13 +68,16 @@ export class TimetrackingFormService {
     );
   }
 
+  public deleteTimetracking(index: number) {
+    this.getTimetrackingList().removeAt(index);
+  }
+
   formatDate(date = new Date()) {
     return this.datePipe.transform(date, 'HH:mm');
   }
 
-  public calculateTotalTime(startTime: Date, endTime: Date): string {
-    var diff = endTime.getTime() - startTime.getTime();
-    var minutes = Math.floor(diff / 1000 / 60);
+  calculateTotalTime(milliseconds: number): string {
+    var minutes = Math.floor(milliseconds / 1000 / 60);
     var hours = Math.floor(minutes / 60);
     var total;
 

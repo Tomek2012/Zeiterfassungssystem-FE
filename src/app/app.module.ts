@@ -2,8 +2,12 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 
+import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -21,7 +25,6 @@ import { TimeBarComponent } from './components/time-bar/time-bar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { TimetrackingComponent } from './pages/timetracking/timetracking.component';
 import { WorkpackageComponent } from './pages/workpackage/workpackage.component';
-import { DatePipe } from '@angular/common';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -66,6 +69,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatSelectModule,
     MatDividerModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCardModule,
   ],
   providers: [
     {
@@ -74,6 +80,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true,
       deps: [KeycloakService],
     },
+    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     DatePipe,
   ],
   bootstrap: [AppComponent],
