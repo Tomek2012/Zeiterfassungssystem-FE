@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { Timetrackings } from 'src/app/models/timetrackings';
 import { TimetrackingFormService } from './timetracking-form.service';
+import { TimetrackingApiService } from 'src/app/api/timetracking-api.service';
 
 @Component({
   selector: 'app-timetracking',
@@ -13,34 +14,47 @@ export class TimetrackingComponent implements OnInit {
   vonDatum = new Date('February 04, 2023 15:15:30');
   zeiten: Array<Timetrackings> = [
     {
+      id: 1,
       fromTime: new Date('February 04, 2023 15:15:30'),
       toTime: new Date('February 04, 2023 18:15:30'),
       workingspackage: { value: 'Paket-0', viewValue: 'Paket1' },
       description: 'Test',
+      userId: 'test'
     },
     {
+      id: 1,
       fromTime: new Date('February 04, 2023 18:15:31'),
       toTime: new Date('February 04, 2023 19:15:31'),
       workingspackage: { value: 'Paket-1', viewValue: 'Paket2' },
       description: 'Test2',
+      userId: 'test'
     },
   ];
+
+  times!: Array<Timetrackings>;
 
   form!: FormGroup;
   total!: string;
 
-  constructor(private timetrackingFormService: TimetrackingFormService) {
+  constructor(
+    private timetrackingFormService: TimetrackingFormService,
+    private timetrackingApiService: TimetrackingApiService
+  ) {
     this.form = timetrackingFormService.getTimetrackingFormGroup();
   }
 
   ngOnInit(): void {
     this.form.controls['date'].valueChanges.subscribe((value) => {
-      this.fillFormWithTimeData();
       this.total = this.timetrackingFormService.calculateTotalTime(
         this.timetrackingFormService.total
       );
     });
     this.form.controls['date'].setValue(new Date());
+    this.timetrackingApiService.getAllTimetrackings().subscribe((res) => {
+      this.times = res;
+      console.log(this.times);
+      this.fillFormWithTimeData();
+    });
   }
 
   public getTimetrackingList(): FormGroup[] {
@@ -49,7 +63,7 @@ export class TimetrackingComponent implements OnInit {
   }
 
   fillFormWithTimeData() {
-    this.timetrackingFormService.fillFormValuesForTimetracking(this.zeiten);
+    this.timetrackingFormService.fillFormValuesForTimetracking(this.times);
   }
 
   lastDay() {
