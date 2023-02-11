@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -26,7 +27,6 @@ import { TimeBarComponent } from './components/time-bar/time-bar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { TimetrackingComponent } from './pages/timetracking/timetracking.component';
 import { WorkpackageComponent } from './pages/workpackage/workpackage.component';
-
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -52,7 +52,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     NavBarComponent,
     WorkpackageComponent,
-    TimeBarComponent
+    TimeBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +75,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatNativeDateModule,
     MatCardModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

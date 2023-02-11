@@ -2,9 +2,9 @@ import { Workpackage } from './workpackage';
 
 export interface Timetrackings {
   id: Number;
+  userId: string;
   fromTime: Date;
   toTime: Date;
-  workingspackage: Workpackage;
+  workingspackage: string;
   description: string;
-  userId: string;
 }

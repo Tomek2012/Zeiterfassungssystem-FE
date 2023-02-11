@@ -16,43 +16,37 @@ export class TimetrackingFormService {
       value: new Date(),
       disabled: true,
     }),
-    timetracking: new FormArray([
-      new FormGroup({
-        timeFrom: new FormControl('', Validators.required),
-        timeTo: new FormControl('', Validators.required),
-        workpackage: new FormControl('', Validators.required),
-        description: new FormControl(''),
-        total: new FormControl({ value: '', disabled: true }),
-      }),
-    ]),
+    timetracking: new FormArray([]),
   });
 
   public getTimetrackingFormGroup(): FormGroup {
     return <FormGroup>this.timetrackingFormGroup;
   }
 
-  public getTimetrackingList(): FormArray {
-    return <FormArray>this.timetrackingFormGroup.controls.timetracking;
+  public getTimetrackingList(): any {
+    return this.timetrackingFormGroup.controls.timetracking;
   }
 
   public fillFormValuesForTimetracking(timetrackings: Array<Timetrackings>) {
-    this.total = 0;
-    timetrackings.forEach((timetrackings, index) => {
-      this.total +=
-        timetrackings.toTime.getTime() - timetrackings.fromTime.getTime();
-      if (!this.getTimetrackingList().controls[index]) {
-        this.addNewTimeTracking(index - 1);
-      }
-      this.getTimetrackingList().controls[index].patchValue({
-        timeFrom: this.formatDate(timetrackings.fromTime),
-        timeTo: this.formatDate(timetrackings.toTime),
-        workpackage: timetrackings.workingspackage.value,
-        description: timetrackings.description,
-        total: this.calculateTotalTime(
-          timetrackings.toTime.getTime() - timetrackings.fromTime.getTime()
-        ),
+    // this.total = 0;
+    if (timetrackings.length > 0) {
+      timetrackings.forEach((timetrackings, index) => {
+        const fromTimeDate = new Date(timetrackings.fromTime);
+        const toTimeDate = new Date(timetrackings.toTime);
+
+        if (!this.getTimetrackingList().controls[index]) {
+          this.addNewTimeTracking(index - 1);
+        }
+
+        this.getTimetrackingList().controls[index].patchValue({
+          timeFrom: this.formatDate(timetrackings.fromTime),
+          timeTo: this.formatDate(timetrackings.toTime),
+          workpackage: timetrackings.workingspackage,
+          description: timetrackings.description,
+          total: toTimeDate.getTime() - fromTimeDate.getTime(),
+        });
       });
-    });
+    }
   }
 
   public addNewTimeTracking(index: number) {
@@ -63,7 +57,7 @@ export class TimetrackingFormService {
         timeTo: new FormControl('', Validators.required),
         workpackage: new FormControl('', Validators.required),
         description: new FormControl(''),
-        total: new FormControl({ value: '', disabled: true }),
+        total: new FormControl(''),
       })
     );
   }

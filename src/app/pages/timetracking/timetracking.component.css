@@ -20,3 +20,13 @@
 .datepicker {
   margin-right: 1%;
 }
+
+.no-times {
+  background-color: #F7D7DA;
+  border: 1px solid lightgray;
+}
+
+.no-times-icon {
+  margin-top: 20px;
+  transform: scale(2);
+}

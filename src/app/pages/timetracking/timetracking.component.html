@@ -26,10 +26,15 @@
     </div>
     <mat-card class="time-card">
       <mat-card-header class="time-card-header">
-        <mat-divider></mat-divider>
         <mat-card-title align="end">Insgesamt: {{ total }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
+        <div *ngIf="!getTimetrackingList()[0]" class="no-times" align="center">
+          <mat-icon class="no-times-icon" fontIcon="alarm"></mat-icon>
+          <div>
+            <p>Es wurden noch keine Zeiten erfasst!</p>
+          </div>
+        </div>
         <ng-container *ngFor="let time of getTimetrackingList(); let i = index">
           <app-time-bar [form]="time" [index]="i"></app-time-bar>
         </ng-container>
@@ -42,3 +47,5 @@
     </mat-card>
   </form>
 </div>
+
+<ng-template #content>Es wurden noch keine Zeiten erfasst!</ng-template>

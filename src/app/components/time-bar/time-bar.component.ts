@@ -10,7 +10,7 @@ import { TimetrackingFormService } from 'src/app/pages/timetracking/timetracking
 })
 export class TimeBarComponent implements OnInit {
   @Input() form!: FormGroup;
-  @Input() index!: number
+  @Input() index!: number;
 
   workpackage: Workpackage[] = [
     { value: 'Paket-0', viewValue: 'Paket1' },
@@ -20,7 +20,17 @@ export class TimeBarComponent implements OnInit {
 
   constructor(private timetrackingFormService: TimetrackingFormService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form.controls['timeTo'].valueChanges.subscribe(() => {
+      // Nicht möglich.. Gesamtzeit implementieren
+      const timeTo = new Date(this.form.controls['timeTo'].value);
+      const timeFrom = new Date(this.form.controls['timeFrom'].value);
+      this.form.controls['total'].patchValue(
+        timeTo.getTime() - timeFrom.getTime()
+      );
+      console.log(this.form.controls['total'].value);
+    });
+  }
 
   deleteTimetrack(index: number) {
     this.timetrackingFormService.deleteTimetracking(index);
