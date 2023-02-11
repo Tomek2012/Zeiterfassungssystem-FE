@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -21,6 +22,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { TimeBarComponent } from './components/time-bar/time-bar.component';
@@ -76,6 +78,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatCardModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatFormFieldModule,
+    NgxMaterialTimepickerModule.setLocale('de-DE'),
   ],
   providers: [
     {

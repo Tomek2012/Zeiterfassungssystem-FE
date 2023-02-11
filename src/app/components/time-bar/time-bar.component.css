@@ -3,14 +3,25 @@
   border: 0.1px solid lightgray;
   border-radius: 5px;
   width: 100%;
-  display: inline-block;
   margin-top: 1px;
+  display: inline-block
+}
+
+.timepicker-fields {
+  display: flex;
+  margin: 1%;
+  margin-top: 30px;
+  float: left;
+}
+
+.timepicker-to {
+  margin-left: 20px;
 }
 
 .form-field {
   margin-top: 10px;
   margin: 1%;
-  width: 113px;
+  width: 100px;
 }
 
 .workpackage-form-field {
@@ -18,12 +29,12 @@
 }
 
 .description-form-field {
-  width: 40%;
+  width: 30%;
 }
 
 .delete-button {
   margin-top: 18px;
   margin-right: 2%;
   float: right;
-  background-color: #F44A3E;
+  background-color: #f44a3e;
 }

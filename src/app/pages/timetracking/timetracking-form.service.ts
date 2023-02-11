@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate, Time } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Timetrackings } from 'src/app/models/timetrackings';
@@ -26,24 +26,22 @@ export class TimetrackingFormService {
   public getTimetrackingList(): any {
     return this.timetrackingFormGroup.controls.timetracking;
   }
-
   public fillFormValuesForTimetracking(timetrackings: Array<Timetrackings>) {
-    // this.total = 0;
     if (timetrackings.length > 0) {
       timetrackings.forEach((timetrackings, index) => {
-        const fromTimeDate = new Date(timetrackings.fromTime);
-        const toTimeDate = new Date(timetrackings.toTime);
+        // const fromTimeDate = new Date(timetrackings.fromTime);
+        // const toTimeDate = new Date(timetrackings.toTime);
 
         if (!this.getTimetrackingList().controls[index]) {
           this.addNewTimeTracking(index - 1);
         }
 
         this.getTimetrackingList().controls[index].patchValue({
-          timeFrom: this.formatDate(timetrackings.fromTime),
-          timeTo: this.formatDate(timetrackings.toTime),
+          timeFrom: timetrackings.fromTime,
+          timeTo: timetrackings.toTime,
           workpackage: timetrackings.workingspackage,
           description: timetrackings.description,
-          total: toTimeDate.getTime() - fromTimeDate.getTime(),
+          // total: timetrackings. - fromTimeDate.getTime(),
         });
       });
     }

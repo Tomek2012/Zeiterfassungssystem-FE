@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Workpackage } from 'src/app/models/workpackage';
@@ -18,17 +19,18 @@ export class TimeBarComponent implements OnInit {
     { value: 'Paket-2', viewValue: 'Paket3' },
   ];
 
-  constructor(private timetrackingFormService: TimetrackingFormService) {}
+  timeTo!: Date;
+  timeFrom!: Date;
+
+  constructor(
+    private timetrackingFormService: TimetrackingFormService,
+  ) {}
 
   ngOnInit(): void {
+    console.log(this.form.controls['timeFrom'].value);
+
     this.form.controls['timeTo'].valueChanges.subscribe(() => {
-      // Nicht möglich.. Gesamtzeit implementieren
-      const timeTo = new Date(this.form.controls['timeTo'].value);
-      const timeFrom = new Date(this.form.controls['timeFrom'].value);
-      this.form.controls['total'].patchValue(
-        timeTo.getTime() - timeFrom.getTime()
-      );
-      console.log(this.form.controls['total'].value);
+      console.log(this.form.controls['timeTo'].value);
     });
   }
 

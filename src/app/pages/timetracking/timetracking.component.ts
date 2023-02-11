@@ -31,16 +31,15 @@ export class TimetrackingComponent implements OnInit {
       this.timetrackingFormService.fillFormValuesForTimetracking(res);
     });
 
-    this.form.controls['timetracking'].valueChanges.subscribe(() => {
-      console.log(this.form.controls['timetracking'].value);
-      console.log(this.getTimetrackingList());
-      var collectTime: number = 0;
-      for (var i = 0; i < this.getTimetrackingList().length; i++) {
-        collectTime += this.getTimetrackingList()[i].controls['total'].value;
-        this.total =
-          this.timetrackingFormService.calculateTotalTime(collectTime);
-      }
-    });
+    // TODO: Insgesamt-Zeit muss ausimplementiert werden
+    // this.form.controls['timetracking'].valueChanges.subscribe(() => {
+    //   var collectTime: number = 0;
+    //   for (var i = 0; i < this.getTimetrackingList().length; i++) {
+    //     collectTime += this.getTimetrackingList()[i].controls['total'].value;
+    //     this.total =
+    //       this.timetrackingFormService.calculateTotalTime(collectTime);
+    //   }
+    // });
   }
 
   public getTimetrackingList(): FormGroup[] {
