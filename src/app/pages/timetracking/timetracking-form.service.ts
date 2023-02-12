@@ -1,4 +1,4 @@
-import { DatePipe, formatDate, Time } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TimetrackingApiService } from 'src/app/api/timetracking-api.service';
@@ -43,7 +43,7 @@ export class TimetrackingFormService {
           toTime: timetrackings.toTime,
           workpackage: timetrackings.workingspackage,
           description: timetrackings.description,
-          timestamp: timetrackings.timestamp
+          timestamp: timetrackings.timestamp,
         });
       });
     }
@@ -58,7 +58,8 @@ export class TimetrackingFormService {
         toTime: new FormControl('', Validators.required),
         workpackage: new FormControl('', Validators.required),
         description: new FormControl(''),
-        timestamp: new FormControl(Date)
+        timestamp: new FormControl(Date),
+        total: new FormControl({ value: '', disabled: true }),
       })
     );
   }
@@ -75,7 +76,7 @@ export class TimetrackingFormService {
 
   public deleteAllTimetrackings() {
     while (this.getTimetrackingList().length !== 0) {
-      this.getTimetrackingList().removeAt(0)
+      this.getTimetrackingList().removeAt(0);
     }
   }
 
@@ -84,23 +85,17 @@ export class TimetrackingFormService {
   }
 
   calculateTotalTime(milliseconds: number): string {
-    var minutes = Math.floor(milliseconds / 1000 / 60);
-    var hours = Math.floor(minutes / 60);
-    var total;
+    let seconds = Math.floor(milliseconds / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
 
-    if (minutes % 60 === 0) {
-      if (hours < 10) {
-        total = '0' + hours.toString() + ':' + '00';
-      } else {
-        total = hours.toString() + ':' + '00';
-      }
-    } else {
-      if (hours < 10) {
-        total = '0' + hours.toString() + ':' + minutes.toString();
-      } else {
-        total = hours.toString() + ':' + minutes.toString();
-      }
-    }
-    return total;
+    seconds = seconds % 60;
+    minutes = minutes % 60;
+    hours = hours % 24;
+    return `${this.padTo2Digits(hours)}:${this.padTo2Digits(minutes)}`;
+  }
+
+  padTo2Digits(num: number) {
+    return num.toString().padStart(2, '0');
   }
 }

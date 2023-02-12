@@ -1,9 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { TimetrackingApiService } from 'src/app/api/timetracking-api.service';
-import { TimetrackingFormService } from './timetracking-form.service';
 import { Timetrackings } from 'src/app/models/timetrackings';
-import { DatePipe, formatDate } from '@angular/common';
+import { TimetrackingFormService } from './timetracking-form.service';
 
 @Component({
   selector: 'app-timetracking',
@@ -26,12 +26,8 @@ export class TimetrackingComponent implements OnInit {
     /** Initialer Start - Hole Zeiterfassungen vom heutigen Tag */
     this.form.controls['date'].setValue(new Date());
 
-    const pickedDate: string = this.datepipe.transform(
-      this.form.controls['date'].value,
-      'dd-MM-yyyy'
-    )!;
     this.timetrackingApiService
-      .getAllTimetrackings(pickedDate)
+      .getAllTimetrackings(this.getDate())
       .subscribe((res) => {
         this.timetrackingFormService.fillFormValuesForTimetracking(res);
       });
@@ -61,7 +57,12 @@ export class TimetrackingComponent implements OnInit {
     this.timetrackingApiService
       .saveAndUpdate(timetrackings)
       .subscribe((res) => {
-        console.log(res);
+        this.timetrackingFormService.deleteAllTimetrackings();
+        this.timetrackingApiService
+          .getAllTimetrackings(this.getDate())
+          .subscribe((res) => {
+            this.timetrackingFormService.fillFormValuesForTimetracking(res);
+          });
       });
   }
 
@@ -88,5 +89,14 @@ export class TimetrackingComponent implements OnInit {
     this.timetrackingFormService.addNewTimeTracking(
       this.getTimetrackingList().length
     );
+  }
+
+  getDate(): string {
+    const pickedDate: string = this.datepipe.transform(
+      this.form.controls['date'].value,
+      'dd-MM-yyyy'
+    )!;
+
+    return pickedDate;
   }
 }
