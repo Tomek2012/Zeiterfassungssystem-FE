@@ -1,6 +1,7 @@
 import { DatePipe, formatDate, Time } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TimetrackingApiService } from 'src/app/api/timetracking-api.service';
 import { Timetrackings } from 'src/app/models/timetrackings';
 
 @Injectable({
@@ -9,7 +10,10 @@ import { Timetrackings } from 'src/app/models/timetrackings';
 export class TimetrackingFormService {
   total: number = 0;
 
-  constructor(private datePipe: DatePipe) {}
+  constructor(
+    private datePipe: DatePipe,
+    private timetrackingApiService: TimetrackingApiService
+  ) {}
 
   private timetrackingFormGroup = new FormGroup({
     date: new FormControl({
@@ -26,42 +30,53 @@ export class TimetrackingFormService {
   public getTimetrackingList(): any {
     return this.timetrackingFormGroup.controls.timetracking;
   }
+
   public fillFormValuesForTimetracking(timetrackings: Array<Timetrackings>) {
     if (timetrackings.length > 0) {
       timetrackings.forEach((timetrackings, index) => {
-        // const fromTimeDate = new Date(timetrackings.fromTime);
-        // const toTimeDate = new Date(timetrackings.toTime);
-
         if (!this.getTimetrackingList().controls[index]) {
-          this.addNewTimeTracking(index - 1);
+          this.addNewTimeTracking(index - 1, timetrackings.id);
         }
-
         this.getTimetrackingList().controls[index].patchValue({
-          timeFrom: timetrackings.fromTime,
-          timeTo: timetrackings.toTime,
+          id: timetrackings.id,
+          fromTime: timetrackings.fromTime,
+          toTime: timetrackings.toTime,
           workpackage: timetrackings.workingspackage,
           description: timetrackings.description,
-          // total: timetrackings. - fromTimeDate.getTime(),
+          timestamp: timetrackings.timestamp
         });
       });
     }
   }
 
-  public addNewTimeTracking(index: number) {
+  public addNewTimeTracking(index: number, id?: number) {
     this.getTimetrackingList().insert(
       index + 1,
       new FormGroup({
-        timeFrom: new FormControl('', Validators.required),
-        timeTo: new FormControl('', Validators.required),
+        id: new FormControl(id),
+        fromTime: new FormControl('', Validators.required),
+        toTime: new FormControl('', Validators.required),
         workpackage: new FormControl('', Validators.required),
         description: new FormControl(''),
-        total: new FormControl(''),
+        timestamp: new FormControl(Date)
       })
     );
   }
 
-  public deleteTimetracking(index: number) {
-    this.getTimetrackingList().removeAt(index);
+  public deleteTimetrackingWithId(id: number, index: number) {
+    if (id) {
+      this.timetrackingApiService.delete(id).subscribe(() => {
+        this.getTimetrackingList().removeAt(index);
+      });
+    } else {
+      this.getTimetrackingList().removeAt(index);
+    }
+  }
+
+  public deleteAllTimetrackings() {
+    while (this.getTimetrackingList().length !== 0) {
+      this.getTimetrackingList().removeAt(0)
+    }
   }
 
   formatDate(date = new Date()) {

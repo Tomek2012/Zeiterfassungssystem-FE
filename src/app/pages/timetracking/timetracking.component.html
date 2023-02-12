@@ -3,7 +3,7 @@
     <div class="date-container">
       <h1>
         Zeiten erfassen ({{
-          form.controls["date"].value | date : "dd.MM.YYYY"
+        form.controls["date"].value | date : "dd.MM.YYYY"
         }})
       </h1>
       <div class="datepicker">
@@ -13,10 +13,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Datum</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="date" />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker disabled="false"></mat-datepicker>
         </mat-form-field>
         <button mat-icon-button (click)="nextDay()">
@@ -42,6 +39,9 @@
       <mat-card-actions>
         <button class="add-button" mat-icon-button (click)="createTimetrack()">
           <mat-icon>add</mat-icon>
+        </button>
+        <button class="add-button" mat-icon-button (click)="saveAndUpdate()">
+          <mat-icon>save</mat-icon>
         </button>
       </mat-card-actions>
     </mat-card>

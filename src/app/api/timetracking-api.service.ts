@@ -13,14 +13,38 @@ export class TimetrackingApiService {
     public keycloakService: KeycloakService
   ) {}
 
-  getAllTimetrackings(): Observable<Array<Timetrackings>> {
+  getAllTimetrackings(date: string): Observable<Array<Timetrackings>> {
     const headers = new HttpHeaders();
     this.keycloakService.addTokenToHeader(headers);
     return this.http.get<Array<Timetrackings>>(
-      'http://localhost:8081/time/11-20-2020',
+      'http://localhost:8081/time/' + date,
       {
         headers: headers,
       }
     );
+  }
+
+  saveAndUpdate(
+    timetrackings: Array<Timetrackings>
+  ): Observable<Array<Timetrackings>> {
+    const headers = new HttpHeaders();
+    this.keycloakService.addTokenToHeader(headers);
+    return this.http.post<Array<Timetrackings>>(
+      'http://localhost:8081/time/save',
+      timetrackings,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  delete(id: number): Observable<any> {
+    console.log(id);
+    const idString = id.toString();
+    const headers = new HttpHeaders();
+    this.keycloakService.addTokenToHeader(headers);
+    return this.http.delete<any>('http://localhost:8081/time/' + idString, {
+      headers: headers,
+    });
   }
 }

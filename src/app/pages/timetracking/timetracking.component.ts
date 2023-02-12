@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { TimetrackingApiService } from 'src/app/api/timetracking-api.service';
 import { TimetrackingFormService } from './timetracking-form.service';
+import { Timetrackings } from 'src/app/models/timetrackings';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-timetracking',
@@ -14,32 +16,53 @@ export class TimetrackingComponent implements OnInit {
 
   constructor(
     private timetrackingFormService: TimetrackingFormService,
-    private timetrackingApiService: TimetrackingApiService
+    private timetrackingApiService: TimetrackingApiService,
+    private datepipe: DatePipe
   ) {
     this.form = timetrackingFormService.getTimetrackingFormGroup();
   }
 
   ngOnInit(): void {
-    /**Einstieg in den heutigen Tag */
+    /** Initialer Start - Hole Zeiterfassungen vom heutigen Tag */
     this.form.controls['date'].setValue(new Date());
+
+    const pickedDate: string = this.datepipe.transform(
+      this.form.controls['date'].value,
+      'dd-MM-yyyy'
+    )!;
+    this.timetrackingApiService
+      .getAllTimetrackings(pickedDate)
+      .subscribe((res) => {
+        this.timetrackingFormService.fillFormValuesForTimetracking(res);
+      });
+
+    /** Abruf der vorhandenen Zeiterfassungen nach ausgewaehltem Datum */
     this.form.controls['date'].valueChanges.subscribe((value) => {
-      /**Hier soll der Datumsabruf rein */
+      this.timetrackingFormService.deleteAllTimetrackings();
+      const pickedDate: string = this.datepipe.transform(
+        this.form.controls['date'].value,
+        'dd-MM-yyyy'
+      )!;
+      this.timetrackingApiService
+        .getAllTimetrackings(pickedDate)
+        .subscribe((res) => {
+          this.timetrackingFormService.fillFormValuesForTimetracking(res);
+        });
     });
+  }
 
-    // Abruf der vorhandenen Zeiterfassungen
-    this.timetrackingApiService.getAllTimetrackings().subscribe((res) => {
-      this.timetrackingFormService.fillFormValuesForTimetracking(res);
-    });
-
-    // TODO: Insgesamt-Zeit muss ausimplementiert werden
-    // this.form.controls['timetracking'].valueChanges.subscribe(() => {
-    //   var collectTime: number = 0;
-    //   for (var i = 0; i < this.getTimetrackingList().length; i++) {
-    //     collectTime += this.getTimetrackingList()[i].controls['total'].value;
-    //     this.total =
-    //       this.timetrackingFormService.calculateTotalTime(collectTime);
-    //   }
-    // });
+  public saveAndUpdate() {
+    const timetrackings: Array<Timetrackings> = [];
+    for (var i = 0; i < this.getTimetrackingList().length; i++) {
+      const timetrack = this.getTimetrackingList()[i].value;
+      timetrack.timestamp = this.form.controls['date'].value;
+      timetrackings.push(timetrack);
+    }
+    this.timetrackingApiService
+      .saveAndUpdate(timetrackings)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   public getTimetrackingList(): FormGroup[] {

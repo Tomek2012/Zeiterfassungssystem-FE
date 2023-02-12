@@ -1,10 +1,10 @@
 import { Workpackage } from './workpackage';
 
 export interface Timetrackings {
-  id: Number;
-  userId: string;
-  fromTime: Date;
-  toTime: Date;
+  id: number;
+  fromTime: string;
+  toTime: string;
   workingspackage: string;
   description: string;
+  timestamp: Date;
 }

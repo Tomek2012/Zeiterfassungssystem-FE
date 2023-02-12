@@ -2,11 +2,11 @@
   <form [formGroup]="form">
     <div class="timepicker-fields">
       <mat-label>Von</mat-label>
-      <ngx-timepicker-field formControlName="timeFrom" [format]="24" [defaultTime]="'00:00'"></ngx-timepicker-field>
+      <ngx-timepicker-field formControlName="fromTime" [format]="24" [defaultTime]="'00:00'"></ngx-timepicker-field>
 
-      <div class="timepicker-to"></div>
+      <div class="timepicker"></div>
       <mat-label>Bis</mat-label>
-      <ngx-timepicker-field formControlName="timeTo" [format]="24" [defaultTime]="'00:00'"></ngx-timepicker-field>
+      <ngx-timepicker-field formControlName="toTime" [format]="24" [defaultTime]="'00:00'"></ngx-timepicker-field>
     </div>
 
     <div class="information-fields">
@@ -25,7 +25,7 @@
       </mat-form-field>
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Gesamt</mat-label>
-        <input matInput type="time" formControlName="total" />
+        <input matInput type="time" />
       </mat-form-field>
       <button class="delete-button" color="warn" mat-mini-fab color="primary" (click)="deleteTimetrack(index)">
         <mat-icon>delete</mat-icon>

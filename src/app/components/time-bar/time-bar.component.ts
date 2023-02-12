@@ -19,22 +19,14 @@ export class TimeBarComponent implements OnInit {
     { value: 'Paket-2', viewValue: 'Paket3' },
   ];
 
-  timeTo!: Date;
-  timeFrom!: Date;
+  constructor(private timetrackingFormService: TimetrackingFormService) {}
 
-  constructor(
-    private timetrackingFormService: TimetrackingFormService,
-  ) {}
-
-  ngOnInit(): void {
-    console.log(this.form.controls['timeFrom'].value);
-
-    this.form.controls['timeTo'].valueChanges.subscribe(() => {
-      console.log(this.form.controls['timeTo'].value);
-    });
-  }
+  ngOnInit(): void {}
 
   deleteTimetrack(index: number) {
-    this.timetrackingFormService.deleteTimetracking(index);
+    this.timetrackingFormService.deleteTimetrackingWithId(
+      this.form.controls['id'].value,
+      index
+    );
   }
 }
