@@ -26,11 +26,7 @@ export class TimetrackingComponent implements OnInit {
     /** Initialer Start - Hole Zeiterfassungen vom heutigen Tag */
     this.form.controls['date'].setValue(new Date());
 
-    this.timetrackingApiService
-      .getAllTimetrackings(this.getDate())
-      .subscribe((res) => {
-        this.timetrackingFormService.fillFormValuesForTimetracking(res);
-      });
+    this.getTimetrackings();
 
     /** Abruf der vorhandenen Zeiterfassungen nach ausgewaehltem Datum */
     this.form.controls['date'].valueChanges.subscribe((value) => {
@@ -39,11 +35,7 @@ export class TimetrackingComponent implements OnInit {
         this.form.controls['date'].value,
         'dd-MM-yyyy'
       )!;
-      this.timetrackingApiService
-        .getAllTimetrackings(pickedDate)
-        .subscribe((res) => {
-          this.timetrackingFormService.fillFormValuesForTimetracking(res);
-        });
+      this.getTimetrackings();
     });
   }
 
@@ -58,17 +50,24 @@ export class TimetrackingComponent implements OnInit {
       .saveAndUpdate(timetrackings)
       .subscribe((res) => {
         this.timetrackingFormService.deleteAllTimetrackings();
-        this.timetrackingApiService
-          .getAllTimetrackings(this.getDate())
-          .subscribe((res) => {
-            this.timetrackingFormService.fillFormValuesForTimetracking(res);
-          });
+        this.getTimetrackings();
       });
   }
 
   public getTimetrackingList(): FormGroup[] {
     return (this.timetrackingFormService.getTimetrackingList() as FormArray)
       .controls as FormGroup[];
+  }
+
+  getTimetrackings() {
+    this.timetrackingApiService
+      .getAllTimetrackings(this.getDate())
+      .subscribe((res) => {
+        this.total = res.total;
+        this.timetrackingFormService.fillFormValuesForTimetracking(
+          res.timetrackings
+        );
+      });
   }
 
   lastDay() {
@@ -85,10 +84,22 @@ export class TimetrackingComponent implements OnInit {
     this.form.controls['date'].setValue(new Date(date));
   }
 
-  createTimetrack() {
+  createTimetracking() {
     this.timetrackingFormService.addNewTimeTracking(
       this.getTimetrackingList().length
     );
+  }
+
+  deleteTimetracking(index: number) {
+    const id: number = this.getTimetrackingList()[index].controls['id'].value;
+    if (id) {
+      this.timetrackingApiService.delete(id).subscribe(() => {
+        this.timetrackingFormService.deleteAllTimetrackings();
+        this.getTimetrackings();
+      });
+    } else {
+      this.timetrackingFormService.deleteTimetracking(index);
+    }
   }
 
   getDate(): string {

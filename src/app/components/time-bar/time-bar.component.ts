@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { merge } from 'rxjs';
 import { Workpackage } from 'src/app/models/workpackage';
@@ -10,6 +10,7 @@ import { TimetrackingFormService } from 'src/app/pages/timetracking/timetracking
   styleUrls: ['./time-bar.component.css'],
 })
 export class TimeBarComponent implements OnInit {
+  @Output() id = new EventEmitter<number>();
   @Input() form!: FormGroup;
   @Input() index!: number;
 
@@ -22,32 +23,34 @@ export class TimeBarComponent implements OnInit {
   constructor(private timetrackingFormService: TimetrackingFormService) {}
 
   ngOnInit(): void {
+    this.setTotalTime();
     merge(
       this.form.controls['fromTime'].valueChanges,
       this.form.controls['toTime'].valueChanges
     ).subscribe(() => {
-      if (
-        this.form.controls['fromTime'].valid &&
-        this.form.controls['toTime'].valid
-      ) {
-        var timeStart = new Date(
-          '2023-01-01 ' + this.form.controls['fromTime'].value
-        );
-        var timeEnd = new Date(
-          '2023-01-01 ' + this.form.controls['toTime'].value
-        );
-        var total = timeEnd.getTime() - timeStart.getTime();
-        this.form.controls['total'].setValue(
-          this.timetrackingFormService.calculateTotalTime(total)
-        );
-      }
+      this.setTotalTime();
     });
   }
 
   deleteTimetrack(index: number) {
-    this.timetrackingFormService.deleteTimetrackingWithId(
-      this.form.controls['id'].value,
-      index
-    );
+    this.id.emit(index);
+  }
+
+  setTotalTime() {
+    if (
+      this.form.controls['fromTime'].valid &&
+      this.form.controls['toTime'].valid
+    ) {
+      var timeStart = new Date(
+        '2023-01-01 ' + this.form.controls['fromTime'].value
+      );
+      var timeEnd = new Date(
+        '2023-01-01 ' + this.form.controls['toTime'].value
+      );
+      var total = timeEnd.getTime() - timeStart.getTime();
+      this.form.controls['total'].setValue(
+        this.timetrackingFormService.calculateTotalTime(total)
+      );
+    }
   }
 }

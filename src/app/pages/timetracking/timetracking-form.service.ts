@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TimetrackingApiService } from 'src/app/api/timetracking-api.service';
 import { Timetrackings } from 'src/app/models/timetrackings';
 
 @Injectable({
@@ -10,10 +9,7 @@ import { Timetrackings } from 'src/app/models/timetrackings';
 export class TimetrackingFormService {
   total: number = 0;
 
-  constructor(
-    private datePipe: DatePipe,
-    private timetrackingApiService: TimetrackingApiService
-  ) {}
+  constructor(private datePipe: DatePipe) {}
 
   private timetrackingFormGroup = new FormGroup({
     date: new FormControl({
@@ -64,14 +60,8 @@ export class TimetrackingFormService {
     );
   }
 
-  public deleteTimetrackingWithId(id: number, index: number) {
-    if (id) {
-      this.timetrackingApiService.delete(id).subscribe(() => {
-        this.getTimetrackingList().removeAt(index);
-      });
-    } else {
-      this.getTimetrackingList().removeAt(index);
-    }
+  public deleteTimetracking(index: number) {
+    this.getTimetrackingList().removeAt(index);
   }
 
   public deleteAllTimetrackings() {

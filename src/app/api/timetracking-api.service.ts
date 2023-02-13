@@ -2,7 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Observable } from 'rxjs';
+import { ROTimetrackings } from '../models/ROTimetrackings';
 import { Timetrackings } from '../models/timetrackings';
+
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +15,10 @@ export class TimetrackingApiService {
     public keycloakService: KeycloakService
   ) {}
 
-  getAllTimetrackings(date: string): Observable<Array<Timetrackings>> {
+  getAllTimetrackings(date: string): Observable<ROTimetrackings> {
     const headers = new HttpHeaders();
     this.keycloakService.addTokenToHeader(headers);
-    return this.http.get<Array<Timetrackings>>(
+    return this.http.get<ROTimetrackings>(
       'http://localhost:8081/time/' + date,
       {
         headers: headers,

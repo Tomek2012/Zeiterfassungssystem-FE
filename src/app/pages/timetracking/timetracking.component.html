@@ -33,11 +33,11 @@
           </div>
         </div>
         <ng-container *ngFor="let time of getTimetrackingList(); let i = index">
-          <app-time-bar [form]="time" [index]="i"></app-time-bar>
+          <app-time-bar [form]="time" [index]="i" (id)="deleteTimetracking($event)"></app-time-bar>
         </ng-container>
       </mat-card-content>
       <mat-card-actions>
-        <button class="add-button" mat-icon-button (click)="createTimetrack()">
+        <button class="add-button" mat-icon-button (click)="createTimetracking()">
           <mat-icon>add</mat-icon>
         </button>
         <button class="add-button" mat-icon-button (click)="saveAndUpdate()">
