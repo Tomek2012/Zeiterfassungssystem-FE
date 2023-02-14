@@ -29,6 +29,9 @@ export class TimeBarComponent implements OnInit {
       this.form.controls['toTime'].valueChanges
     ).subscribe(() => {
       this.setTotalTime();
+      this.validateUndercutTime();
+      this.validateExistingFromTime();
+      this.validateExistingToTime();
     });
   }
 
@@ -51,6 +54,52 @@ export class TimeBarComponent implements OnInit {
       this.form.controls['total'].setValue(
         this.timetrackingFormService.calculateTotalTime(total)
       );
+    }
+  }
+
+  validateUndercutTime() {
+    if (this.form.controls['fromTime'].valid) {
+      var timeStart = new Date(
+        '2023-01-01 ' + this.form.controls['fromTime'].value
+      );
+      var timeEnd = new Date(
+        '2023-01-01 ' + this.form.controls['toTime'].value
+      );
+      if (timeStart >= timeEnd) {
+        this.form.controls['toTime'].setErrors({ undercut: true });
+      } else {
+        this.form.controls['toTime'].setErrors(null);
+      }
+    }
+  }
+
+  validateExistingFromTime() {
+    if (this.form.controls['fromTime'].valid) {
+      var timeStart = new Date(
+        '2023-01-01 ' + this.form.controls['fromTime'].value
+      );
+
+      if (
+        this.timetrackingFormService.validateTimeExits(this.index, timeStart)
+      ) {
+        this.form.controls['fromTime'].setErrors({ fromTimeExists: true });
+      } else {
+        this.form.controls['fromTime'].setErrors(null);
+      }
+    }
+  }
+
+  validateExistingToTime() {
+    if (this.form.controls['toTime'].valid) {
+      var timeEnd = new Date(
+        '2023-01-01 ' + this.form.controls['toTime'].value
+      );
+
+      if (this.timetrackingFormService.validateTimeExits(this.index, timeEnd)) {
+        this.form.controls['toTime'].setErrors({ toTimeExists: true });
+      } else {
+        this.form.controls['toTime'].setErrors(null);
+      }
     }
   }
 }

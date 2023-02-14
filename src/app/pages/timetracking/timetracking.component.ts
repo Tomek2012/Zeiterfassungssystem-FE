@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TimetrackingApiService } from 'src/app/api/timetracking-api.service';
 import { Timetrackings } from 'src/app/models/timetrackings';
 import { TimetrackingFormService } from './timetracking-form.service';
@@ -17,7 +18,8 @@ export class TimetrackingComponent implements OnInit {
   constructor(
     private timetrackingFormService: TimetrackingFormService,
     private timetrackingApiService: TimetrackingApiService,
-    private datepipe: DatePipe
+    private datepipe: DatePipe,
+    private snackBar: MatSnackBar
   ) {
     this.form = timetrackingFormService.getTimetrackingFormGroup();
   }
@@ -31,27 +33,40 @@ export class TimetrackingComponent implements OnInit {
     /** Abruf der vorhandenen Zeiterfassungen nach ausgewaehltem Datum */
     this.form.controls['date'].valueChanges.subscribe((value) => {
       this.timetrackingFormService.deleteAllTimetrackings();
-      const pickedDate: string = this.datepipe.transform(
-        this.form.controls['date'].value,
-        'dd-MM-yyyy'
-      )!;
       this.getTimetrackings();
     });
   }
 
   public saveAndUpdate() {
-    const timetrackings: Array<Timetrackings> = [];
-    for (var i = 0; i < this.getTimetrackingList().length; i++) {
-      const timetrack = this.getTimetrackingList()[i].value;
-      timetrack.timestamp = this.form.controls['date'].value;
-      timetrackings.push(timetrack);
+    if (this.form.valid) {
+      const timetrackings: Array<Timetrackings> = [];
+      for (var i = 0; i < this.getTimetrackingList().length; i++) {
+        const timetrack = this.getTimetrackingList()[i].value;
+        timetrack.timestamp = this.form.controls['date'].value;
+        timetrackings.push(timetrack);
+      }
+      this.timetrackingApiService
+        .saveAndUpdate(timetrackings)
+        .subscribe((res) => {
+          this.timetrackingFormService.deleteAllTimetrackings();
+          this.getTimetrackings();
+          this.snackBar.open(
+            'Die Zeiterfassungen wurden erfolgreich gespeichert',
+            'Schließen',
+            {
+              duration: 3000,
+            }
+          );
+        });
+    } else {
+      this.snackBar.open(
+        'Speicherung nicht möglich: Bitte alle Pflichtfelder prüfen',
+        'Schließen',
+        {
+          duration: 5000,
+        }
+      );
     }
-    this.timetrackingApiService
-      .saveAndUpdate(timetrackings)
-      .subscribe((res) => {
-        this.timetrackingFormService.deleteAllTimetrackings();
-        this.getTimetrackings();
-      });
   }
 
   public getTimetrackingList(): FormGroup[] {

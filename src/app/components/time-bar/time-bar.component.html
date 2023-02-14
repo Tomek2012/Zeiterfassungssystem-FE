@@ -1,12 +1,32 @@
 <div class="timebar-component">
   <form [formGroup]="form">
     <div class="timepicker-fields">
-      <mat-label>Von</mat-label>
-      <ngx-timepicker-field formControlName="fromTime" [format]="24" [defaultTime]="'00:00'"></ngx-timepicker-field>
+      <mat-form-field class="timepicker-from" appearance="outline">
+        <mat-label>Bis</mat-label>
+        <input matInput type="time" formControlName="fromTime">
+        <mat-error *ngIf="form.controls['fromTime'].hasError('required')">
+          Bitte Startzeit <strong>eintragen</strong>
+        </mat-error>
+        <mat-error *ngIf="form.controls['fromTime'].hasError('fromTimeExists')">
+          Zeitüberschreitung
+        </mat-error>
+      </mat-form-field>
 
-      <div class="timepicker"></div>
-      <mat-label>Bis</mat-label>
-      <ngx-timepicker-field formControlName="toTime" [format]="24" [defaultTime]="'00:00'"></ngx-timepicker-field>
+      <mat-form-field class="timepicker-to" appearance="outline">
+        <mat-label>Von</mat-label>
+        <input matInput type="time" formControlName="toTime">
+        <mat-error *ngIf="form.controls['toTime'].hasError('required')">
+          Bitte Endzeit <strong>eintragen</strong>
+        </mat-error>
+        <mat-error *ngIf="form.controls['toTime'].hasError('undercut')">
+          Die Endzeit ist höher als die Startzeit
+        </mat-error>
+        <mat-error *ngIf="form.controls['toTime'].hasError('toTimeExists')">
+          Zeitüberschreitung
+        </mat-error>
+      </mat-form-field>
+      <!-- <mat-label>Bis</mat-label>
+      <ngx-timepicker-field formControlName="toTime" [format]="24" [defaultTime]="'00:00'"></ngx-timepicker-field> -->
     </div>
 
     <div class="information-fields">
@@ -20,7 +40,7 @@
       </mat-form-field>
       <mat-form-field class="description-form-field form-field" hintLabel="Max. 256 Buchstaben" appearance="outline">
         <mat-label>Füge eine Beschreibung hinzu</mat-label>
-        <input matInput #input maxlength="256" placeholder="Bemerkung" formControlName="description" />
+        <input matInput #input maxlength="256" placeholder="Beschreibung" formControlName="description" />
         <mat-hint align="end">{{ input.value.length }}/256</mat-hint>
       </mat-form-field>
       <mat-form-field class="form-field" appearance="outline">

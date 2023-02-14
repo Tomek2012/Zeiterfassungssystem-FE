@@ -29,6 +29,7 @@ import { TimeBarComponent } from './components/time-bar/time-bar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { TimetrackingComponent } from './pages/timetracking/timetracking.component';
 import { WorkpackageComponent } from './pages/workpackage/workpackage.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -80,6 +81,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatProgressSpinnerModule,
     MatFormFieldModule,
     NgxMaterialTimepickerModule.setLocale('de-DE'),
+    MatSnackBarModule,
   ],
   providers: [
     {

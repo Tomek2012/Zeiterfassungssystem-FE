@@ -27,6 +27,10 @@ export class TimetrackingFormService {
     return this.timetrackingFormGroup.controls.timetracking;
   }
 
+  public getTimetrackingListAsFormGroup(): FormGroup[] {
+    return (this.getTimetrackingList() as FormArray).controls as FormGroup[];
+  }
+
   public fillFormValuesForTimetracking(timetrackings: Array<Timetrackings>) {
     if (timetrackings.length > 0) {
       timetrackings.forEach((timetrackings, index) => {
@@ -52,7 +56,7 @@ export class TimetrackingFormService {
         id: new FormControl(id),
         fromTime: new FormControl('', Validators.required),
         toTime: new FormControl('', Validators.required),
-        workpackage: new FormControl('', Validators.required),
+        workpackage: new FormControl(''),
         description: new FormControl(''),
         timestamp: new FormControl(Date),
         total: new FormControl({ value: '', disabled: true }),
@@ -87,5 +91,26 @@ export class TimetrackingFormService {
 
   padTo2Digits(num: number) {
     return num.toString().padStart(2, '0');
+  }
+
+  validateTimeExits(index: number, time: Date): boolean {
+    var betweenTimetrackings: boolean = false;
+    for (var i = 0; i < this.getTimetrackingListAsFormGroup().length; i++) {
+      if (index != i) {
+        var starttime = new Date(
+          '2023-01-01 ' +
+            this.getTimetrackingListAsFormGroup()[i].controls['fromTime'].value
+        );
+        var endtime = new Date(
+          '2023-01-01 ' +
+            this.getTimetrackingListAsFormGroup()[i].controls['toTime'].value
+        );
+
+        if (time >= starttime && time <= endtime) {
+          betweenTimetrackings = true;
+        }
+      }
+    }
+    return betweenTimetrackings;
   }
 }

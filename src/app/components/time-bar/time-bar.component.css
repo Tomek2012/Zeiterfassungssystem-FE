@@ -9,13 +9,18 @@
 
 .timepicker-fields {
   display: flex;
-  margin: 1%;
-  margin-top: 30px;
+  margin-top: 1%;
   float: left;
+}
+
+.timepicker-from {
+  margin-left: 20px;
+  width: 140px;
 }
 
 .timepicker-to {
   margin-left: 20px;
+  width: 140px;
 }
 
 .form-field {
