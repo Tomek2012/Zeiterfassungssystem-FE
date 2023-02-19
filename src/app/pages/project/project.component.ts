@@ -30,7 +30,7 @@ export class ProjectComponent implements OnInit {
   }
 
   public fillProjects() {
-    this.projectApiService.getAllTimetrackings().subscribe((result) => {
+    this.projectApiService.getAllProjects().subscribe((result) => {
       this.projects = result;
     });
   }
@@ -47,7 +47,7 @@ export class ProjectComponent implements OnInit {
         this.projectForm.clearValidators();
 
         this.snackBar.open(
-          'Es wurde erfolgreich ein Arbeitspaket angelegt',
+          'Arbeitspaket wurde erfolgreich angelegt',
           'Schließen',
           {
             duration: 3000,

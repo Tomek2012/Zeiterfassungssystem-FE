@@ -41,7 +41,7 @@ export class TimetrackingFormService {
           id: timetrackings.id,
           fromTime: timetrackings.fromTime,
           toTime: timetrackings.toTime,
-          workpackage: timetrackings.workingspackage,
+          project: timetrackings.project,
           description: timetrackings.description,
           timestamp: timetrackings.timestamp,
         });
@@ -56,7 +56,7 @@ export class TimetrackingFormService {
         id: new FormControl(id),
         fromTime: new FormControl('', Validators.required),
         toTime: new FormControl('', Validators.required),
-        workpackage: new FormControl(''),
+        project: new FormControl('', Validators.required),
         description: new FormControl(''),
         timestamp: new FormControl(Date),
         total: new FormControl({ value: '', disabled: true }),

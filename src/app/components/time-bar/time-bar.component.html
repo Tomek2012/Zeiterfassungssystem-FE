@@ -28,11 +28,11 @@
     </div>
 
     <div class="information-fields">
-      <mat-form-field class="workpackage-form-field form-field" appearance="outline">
+      <mat-form-field class="project-form-field form-field" appearance="outline">
         <mat-label>Arbeitspaket</mat-label>
-        <mat-select formControlName="workpackage">
-          <mat-option *ngFor="let package of workpackage" [value]="package.value">
-            {{ package.viewValue }}
+        <mat-select formControlName="project">
+          <mat-option *ngFor="let project of projects" [value]="project.id">
+            {{ project.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { merge } from 'rxjs';
 import { TimetrackingFormService } from 'src/app/pages/timetracking/timetracking-form.service';
+import { Project } from 'src/app/models/project';
+import { ProjectApiService } from 'src/app/api/project-api.service';
 
 @Component({
   selector: 'app-time-bar',
@@ -13,23 +15,31 @@ export class TimeBarComponent implements OnInit {
   @Input() form!: FormGroup;
   @Input() index!: number;
 
-  workpackage = [
-    { value: 'Paket-0', viewValue: 'Paket1' },
-    { value: 'Paket-1', viewValue: 'Paket2' },
-    { value: 'Paket-2', viewValue: 'Paket3' },
-  ];
+  projects!: Project[];
 
-  constructor(private timetrackingFormService: TimetrackingFormService) {}
+  constructor(
+    private timetrackingFormService: TimetrackingFormService,
+    private projectApiService: ProjectApiService
+  ) {}
 
   ngOnInit(): void {
     this.setTotalTime();
     merge(
       this.form.controls['fromTime'].valueChanges,
-      this.form.controls['toTime'].valueChanges
+      this.form.controls['toTime'].valueChanges,
+      this.form.controls['project'].valueChanges
     ).subscribe(() => {
       this.setTotalTime();
       this.validateUndercutTime();
       this.validateTimeBetweenTimerange();
+    });
+
+    this.getProjects();
+  }
+
+  getProjects() {
+    this.projectApiService.getAllProjects().subscribe((result) => {
+      this.projects = result;
     });
   }
 

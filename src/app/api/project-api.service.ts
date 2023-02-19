@@ -13,7 +13,7 @@ export class ProjectApiService {
     public keycloakService: KeycloakService
   ) {}
 
-  getAllTimetrackings(): Observable<Project[]> {
+  getAllProjects(): Observable<Project[]> {
     const headers = new HttpHeaders();
     this.keycloakService.addTokenToHeader(headers);
     return this.http.get<Project[]>('http://localhost:8081/project/', {
