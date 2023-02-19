@@ -30,8 +30,7 @@ export class TimeBarComponent implements OnInit {
     ).subscribe(() => {
       this.setTotalTime();
       this.validateUndercutTime();
-      this.validateExistingFromTime();
-      this.validateExistingToTime();
+      this.validateTimeBetweenTimerange();
     });
   }
 
@@ -40,10 +39,7 @@ export class TimeBarComponent implements OnInit {
   }
 
   setTotalTime() {
-    if (
-      this.form.controls['fromTime'].valid &&
-      this.form.controls['toTime'].valid
-    ) {
+    if (this.form.controls['toTime'].valid) {
       var timeStart = new Date(
         '2023-01-01 ' + this.form.controls['fromTime'].value
       );
@@ -73,31 +69,26 @@ export class TimeBarComponent implements OnInit {
     }
   }
 
-  validateExistingFromTime() {
-    if (this.form.controls['fromTime'].valid) {
+  validateTimeBetweenTimerange() {
+    if (this.form.controls['toTime'].valid) {
       var timeStart = new Date(
         '2023-01-01 ' + this.form.controls['fromTime'].value
       );
-
-      if (
-        this.timetrackingFormService.validateTimeExits(this.index, timeStart)
-      ) {
-        this.form.controls['fromTime'].setErrors({ fromTimeExists: true });
-      } else {
-        this.form.controls['fromTime'].setErrors(null);
-      }
-    }
-  }
-
-  validateExistingToTime() {
-    if (this.form.controls['toTime'].valid) {
       var timeEnd = new Date(
         '2023-01-01 ' + this.form.controls['toTime'].value
       );
 
-      if (this.timetrackingFormService.validateTimeExits(this.index, timeEnd)) {
-        this.form.controls['toTime'].setErrors({ toTimeExists: true });
+      if (
+        this.timetrackingFormService.validateTimeExits(
+          this.index,
+          timeStart,
+          timeEnd
+        )
+      ) {
+        this.form.controls['fromTime'].setErrors({ betweenRange: true });
+        this.form.controls['toTime'].setErrors({ betweenRange: true });
       } else {
+        this.form.controls['fromTime'].setErrors(null);
         this.form.controls['toTime'].setErrors(null);
       }
     }

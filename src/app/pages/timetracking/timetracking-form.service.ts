@@ -93,10 +93,22 @@ export class TimetrackingFormService {
     return num.toString().padStart(2, '0');
   }
 
-  validateTimeExits(index: number, time: Date): boolean {
+  // Methode zur Pruefung ob sich eine Zeitspanne mit einer anderen Zeitspanne kollidiert
+  validateTimeExits(index: number, firsttime: Date, lasttime: Date): boolean {
     var betweenTimetrackings: boolean = false;
+
+    // Erstelle Zeitrange der neuen Zeiterfassung
+    const rageNewTime = [];
+    while (firsttime <= lasttime) {
+      rageNewTime.push(new Date(firsttime));
+      firsttime.setMinutes(firsttime.getMinutes() + 1);
+    }
+
     for (var i = 0; i < this.getTimetrackingListAsFormGroup().length; i++) {
       if (index != i) {
+        this.getTimetrackingListAsFormGroup()[i].controls['fromTime'].setErrors(null);
+        this.getTimetrackingListAsFormGroup()[i].controls['toTime'].setErrors(null);
+        // Hole andere Zeiterfassung aus dem Index
         var starttime = new Date(
           '2023-01-01 ' +
             this.getTimetrackingListAsFormGroup()[i].controls['fromTime'].value
@@ -106,8 +118,27 @@ export class TimetrackingFormService {
             this.getTimetrackingListAsFormGroup()[i].controls['toTime'].value
         );
 
-        if (time >= starttime && time <= endtime) {
-          betweenTimetrackings = true;
+        // Ignoriere erste Minute, damit gleiche Zeit gestartet werden kann
+        starttime.setMinutes(starttime.getMinutes() + 1);
+        // Ignoriere letzte Minute, damit gleiche Zeit gestartet werden kann
+        endtime.setMinutes(endtime.getMinutes() - 1);
+
+        // Liste mit allen Minuten zwischen angegebener Zeiterfassung
+        const listMinutes = [];
+
+        // Erstelle Zeitrange der schon erfassten Zeiterfassung
+        while (starttime <= endtime) {
+          listMinutes.push(new Date(starttime));
+          starttime.setMinutes(starttime.getMinutes() + 1);
+        }
+
+        // Prufung ob in Range oder nicht
+        for (let i = 0; i < rageNewTime.length; i++) {
+          for (let j = 0; j < listMinutes.length; j++) {
+            if (rageNewTime[i].getTime() == listMinutes[j].getTime()) {
+              betweenTimetrackings = true;
+            }
+          }
         }
       }
     }

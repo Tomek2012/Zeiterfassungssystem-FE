@@ -7,8 +7,8 @@
         <mat-error *ngIf="form.controls['fromTime'].hasError('required')">
           Bitte Startzeit <strong>eintragen</strong>
         </mat-error>
-        <mat-error *ngIf="form.controls['fromTime'].hasError('fromTimeExists')">
-          Zeitüberschreitung
+        <mat-error *ngIf="form.controls['fromTime'].hasError('betweenRange')">
+          Zeit überschreibt andere Zeiterfassung
         </mat-error>
       </mat-form-field>
 
@@ -21,12 +21,10 @@
         <mat-error *ngIf="form.controls['toTime'].hasError('undercut')">
           Die Endzeit ist höher als die Startzeit
         </mat-error>
-        <mat-error *ngIf="form.controls['toTime'].hasError('toTimeExists')">
-          Zeitüberschreitung
+        <mat-error *ngIf="form.controls['toTime'].hasError('betweenRange')">
+          Zeit überschreibt andere Zeiterfassung
         </mat-error>
       </mat-form-field>
-      <!-- <mat-label>Bis</mat-label>
-      <ngx-timepicker-field formControlName="toTime" [format]="24" [defaultTime]="'00:00'"></ngx-timepicker-field> -->
     </div>
 
     <div class="information-fields">
