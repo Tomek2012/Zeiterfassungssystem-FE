@@ -2,49 +2,38 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Observable } from 'rxjs';
-import { ROTimetrackings } from '../models/ROTimetrackings';
-import { Timetrackings } from '../models/timetrackings';
-
+import { Project } from '../models/project';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TimetrackingApiService {
+export class ProjectApiService {
   constructor(
     private http: HttpClient,
     public keycloakService: KeycloakService
   ) {}
 
-  getAllTimetrackings(date: string): Observable<ROTimetrackings> {
+  getAllTimetrackings(): Observable<Project[]> {
     const headers = new HttpHeaders();
     this.keycloakService.addTokenToHeader(headers);
-    return this.http.get<ROTimetrackings>(
-      'http://localhost:8081/time/' + date,
-      {
-        headers: headers,
-      }
-    );
+    return this.http.get<Project[]>('http://localhost:8081/project/', {
+      headers: headers,
+    });
   }
 
-  saveAndUpdate(
-    timetrackings: Array<Timetrackings>
-  ): Observable<Array<Timetrackings>> {
+  save(project: Project): Observable<any> {
     const headers = new HttpHeaders();
     this.keycloakService.addTokenToHeader(headers);
-    return this.http.post<Array<Timetrackings>>(
-      'http://localhost:8081/time/save',
-      timetrackings,
-      {
-        headers: headers,
-      }
-    );
+    return this.http.post<Project>('http://localhost:8081/project/save', project, {
+      headers: headers,
+    });
   }
 
   delete(id: number): Observable<any> {
     const idString = id.toString();
     const headers = new HttpHeaders();
     this.keycloakService.addTokenToHeader(headers);
-    return this.http.delete<any>('http://localhost:8081/time/' + idString, {
+    return this.http.delete<any>('http://localhost:8081/project/' + idString, {
       headers: headers,
     });
   }

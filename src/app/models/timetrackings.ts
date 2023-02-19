@@ -1,5 +1,3 @@
-import { Workpackage } from './workpackage';
-
 export interface Timetrackings {
   id: number;
   fromTime: string;

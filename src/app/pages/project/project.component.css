@@ -1,0 +1,17 @@
+.project-container {
+  margin-left: 20px;
+}
+
+.form-field-description {
+    margin-left: 20px;
+}
+
+.project-table {
+  width: 60%;
+}
+
+.delete-button {
+  float: right;
+  background-color: #f44a3e;
+  margin: 20px;
+}

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { KeycloakGuard } from './keycloak.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { TimetrackingComponent } from './pages/timetracking/timetracking.component';
-import { WorkpackageComponent } from './pages/workpackage/workpackage.component';
+import { ProjectComponent } from './pages/project/project.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,8 +13,8 @@ const routes: Routes = [
     canActivate: [KeycloakGuard],
   },
   {
-    path: 'workpackage',
-    component: WorkpackageComponent,
+    path: 'project',
+    component: ProjectComponent,
     canActivate: [KeycloakGuard],
     data: { roles: ['time_administration'] },
   },

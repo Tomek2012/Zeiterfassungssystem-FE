@@ -18,6 +18,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,8 +30,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { TimeBarComponent } from './components/time-bar/time-bar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { TimetrackingComponent } from './pages/timetracking/timetracking.component';
-import { WorkpackageComponent } from './pages/workpackage/workpackage.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ProjectComponent } from './pages/project/project.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -54,7 +55,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     TimetrackingComponent,
     HomeComponent,
     NavBarComponent,
-    WorkpackageComponent,
+    ProjectComponent,
     TimeBarComponent,
   ],
   imports: [
@@ -82,6 +83,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatFormFieldModule,
     NgxMaterialTimepickerModule.setLocale('de-DE'),
     MatSnackBarModule,
+    MatTableModule,
   ],
   providers: [
     {

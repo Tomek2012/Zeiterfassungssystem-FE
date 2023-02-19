@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { merge } from 'rxjs';
-import { Workpackage } from 'src/app/models/workpackage';
 import { TimetrackingFormService } from 'src/app/pages/timetracking/timetracking-form.service';
 
 @Component({
@@ -14,7 +13,7 @@ export class TimeBarComponent implements OnInit {
   @Input() form!: FormGroup;
   @Input() index!: number;
 
-  workpackage: Workpackage[] = [
+  workpackage = [
     { value: 'Paket-0', viewValue: 'Paket1' },
     { value: 'Paket-1', viewValue: 'Paket2' },
     { value: 'Paket-2', viewValue: 'Paket3' },
