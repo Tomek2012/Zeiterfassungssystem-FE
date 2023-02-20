@@ -9,7 +9,7 @@ import { TimetrackingFormService } from './timetracking-form.service';
 @Component({
   selector: 'app-timetracking',
   templateUrl: './timetracking.component.html',
-  styleUrls: ['./timetracking.component.css'],
+  styleUrls: ['./timetracking.component.scss'],
 })
 export class TimetrackingComponent implements OnInit {
   form!: FormGroup;

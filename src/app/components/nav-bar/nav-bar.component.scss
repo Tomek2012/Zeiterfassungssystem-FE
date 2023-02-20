@@ -1,6 +1,9 @@
 .header-menu {
   background-color: #3c6e71;
   height: 6%;
+  // box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+  position: relative;
+  z-index: 2;
 }
 
 .time-icon {

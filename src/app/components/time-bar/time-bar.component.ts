@@ -8,7 +8,7 @@ import { ProjectApiService } from 'src/app/api/project-api.service';
 @Component({
   selector: 'app-time-bar',
   templateUrl: './time-bar.component.html',
-  styleUrls: ['./time-bar.component.css'],
+  styleUrls: ['./time-bar.component.scss'],
 })
 export class TimeBarComponent implements OnInit {
   @Output() id = new EventEmitter<number>();
