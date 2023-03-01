@@ -1,0 +1,34 @@
+.header-menu {
+  background-color: #3c6e71;
+  height: 6%;
+  // box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+  position: relative;
+  z-index: 2;
+}
+
+.time-icon {
+  margin-right: 5px;
+  position: relative;
+  top: 4px;
+}
+
+.login-button {
+  padding: 0;
+  width: 90px;
+  position: absolute;
+  right: 20px;
+}
+
+.profile-button {
+  padding: 0;
+  position: absolute;
+  right: 20px;
+}
+
+.account-icon {
+  transform: scale(2);
+}
+
+.account-name {
+  margin-left: 5px;
+}

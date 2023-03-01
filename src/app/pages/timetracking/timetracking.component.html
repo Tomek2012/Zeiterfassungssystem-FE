@@ -1,1 +1,51 @@
-<p>timetracking works!</p>
+<div class="time-container">
+  <form [formGroup]="form">
+    <div class="date-container">
+      <h1>
+        Zeiten erfassen ({{
+        form.controls["date"].value | date : "dd.MM.YYYY"
+        }})
+      </h1>
+      <div class="datepicker">
+        <button mat-icon-button (click)="lastDay()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-form-field appearance="outline">
+          <mat-label>Datum</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <button mat-icon-button (click)="nextDay()">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-card class="time-card">
+      <mat-card-header class="time-card-header">
+        <mat-card-title align="end">Insgesamt: {{ total }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="!getTimetrackingList()[0]" class="no-times" align="center">
+          <mat-icon class="no-times-icon" fontIcon="alarm"></mat-icon>
+          <div>
+            <p>Es wurden noch keine Zeiten erfasst!</p>
+          </div>
+        </div>
+        <ng-container *ngFor="let time of getTimetrackingList(); let i = index">
+          <app-time-bar [form]="time" [index]="i" (id)="deleteTimetracking($event)"></app-time-bar>
+        </ng-container>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="add-button" mat-icon-button (click)="createTimetracking()">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button class="add-button" mat-icon-button (click)="saveAndUpdate()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
+
+<ng-template #content>Es wurden noch keine Zeiten erfasst!</ng-template>

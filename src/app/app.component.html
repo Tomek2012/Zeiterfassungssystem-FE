@@ -1,5 +1,47 @@
-<h1>Willkommen</h1>
+<!-- Header fuer Navigation und Login -->
+<app-nav-bar [inputSideNav]="sidenav"></app-nav-bar>
 
-<app-home></app-home>
+<!-- Seitennavigation inklusive Rahmen fuer Seiteninhalte -->
+<mat-sidenav-container class="sidenav-container" autosize="true">
+  <mat-sidenav #sidenav class="sidenav-menu" mode="side" opened>
+    <mat-nav-list>
+      <!-- Navigation (Home, Zeiterfassung, usw) abhaengig von Authentifikation -->
+      <mat-list-item routerLink="/" routerLinkActive="active">
+        <span class="menu-item">
+          <mat-icon class="home-icon">home</mat-icon>Startseite</span
+        >
+      </mat-list-item>
 
-<!-- <router-outlet></router-outlet> -->
+      <mat-list-item
+        *ngIf="this.isLoggedIn"
+        routerLink="/timetracking"
+        routerLinkActive="active"
+      >
+        <span class="menu-item">
+          <mat-icon class="home-icon">more_time</mat-icon>Zeiterfassung</span
+        >
+      </mat-list-item>
+
+      <mat-list-item
+        *ngIf="this.isLoggedIn"
+        routerLink="/project"
+        routerLinkActive="active"
+        [disabled]="!isUserAllowed"
+      >
+        <span class="menu-item">
+          <mat-icon class="home-icon">library_add</mat-icon>Arbeitspakete</span
+        >
+        <mat-icon
+          *ngIf="!isUserAllowed"
+          matTooltip="Sie haben keine Berechtigung für das Anlegen von Arbeitspaketen"
+          class="info-icon"
+          >info</mat-icon
+        >
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <!-- Seiteninhalt -->
+  <div class="sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>

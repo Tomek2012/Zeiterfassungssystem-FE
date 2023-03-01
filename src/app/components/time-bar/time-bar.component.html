@@ -1,0 +1,53 @@
+<div class="timebar-component">
+  <form [formGroup]="form">
+    <div class="timepicker-fields">
+      <mat-form-field class="timepicker-from" appearance="outline">
+        <mat-label>Bis</mat-label>
+        <input matInput type="time" formControlName="fromTime">
+        <mat-error *ngIf="form.controls['fromTime'].hasError('required')">
+          Bitte Startzeit <strong>eintragen</strong>
+        </mat-error>
+        <mat-error *ngIf="form.controls['fromTime'].hasError('betweenRange')">
+          Zeit überschreibt andere Zeiterfassung
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="timepicker-to" appearance="outline">
+        <mat-label>Von</mat-label>
+        <input matInput type="time" formControlName="toTime">
+        <mat-error *ngIf="form.controls['toTime'].hasError('required')">
+          Bitte Endzeit <strong>eintragen</strong>
+        </mat-error>
+        <mat-error *ngIf="form.controls['toTime'].hasError('undercut')">
+          Die Endzeit ist höher als die Startzeit
+        </mat-error>
+        <mat-error *ngIf="form.controls['toTime'].hasError('betweenRange')">
+          Zeit überschreibt andere Zeiterfassung
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="information-fields">
+      <mat-form-field class="project-form-field form-field" appearance="outline">
+        <mat-label>Arbeitspaket</mat-label>
+        <mat-select formControlName="project">
+          <mat-option *ngFor="let project of projects" [value]="project.id">
+            {{ project.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="description-form-field form-field" hintLabel="Max. 256 Buchstaben" appearance="outline">
+        <mat-label>Füge eine Beschreibung hinzu</mat-label>
+        <input matInput #input maxlength="256" placeholder="Beschreibung" formControlName="description" />
+        <mat-hint align="end">{{ input.value.length }}/256</mat-hint>
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Gesamt</mat-label>
+        <input matInput type="text" formControlName="total" />
+      </mat-form-field>
+      <button class="delete-button" color="warn" mat-mini-fab color="primary" (click)="deleteTimetrack(index)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

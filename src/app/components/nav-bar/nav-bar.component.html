@@ -1,0 +1,32 @@
+<!-- Header for navigation and login-->
+<mat-toolbar class="mat-elevation-z2 header-menu">
+  <button mat-icon-button class="menu-icon" (click)="inputSideNav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>ClockMaster24</span>
+  <span><mat-icon class="time-icon">more_time</mat-icon></span>
+  <span class="example-spacer"></span><button
+    *ngIf="!this.isLoggedIn; else loggedOut"
+    mat-raised-button
+    class="login-button"
+    (click)="login()"
+  >
+    <mat-icon class="login-icon">login</mat-icon>
+    <span>Login</span>
+  </button>
+</mat-toolbar>
+
+<ng-template #loggedOut>
+  <button
+    *ngIf="this.isLoggedIn"
+    mat-button
+    class="profile-button"
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon class="account-icon">account_circle</mat-icon>
+    <span class="account-name">{{ getUserInformation() }}</span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+</ng-template>

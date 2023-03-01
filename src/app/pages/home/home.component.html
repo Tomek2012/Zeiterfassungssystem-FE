@@ -1,13 +1,16 @@
-<ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
-  <button
-    (click)="
-      auth.logout({ logoutParams: { returnTo: document.location.origin } })
-    "
-  >
-    Log out
-  </button>
-</ng-container>
-
-<ng-template #loggedOut>
-  <button (click)="auth.loginWithRedirect()">Log in</button>
-</ng-template>
+<div class="container-fluid">
+  <div class="row header">
+    <div class="col-md-6 col-sm-6 header-text">
+      <h4>Digitale Zeiterfassung</h4>
+      <h1 class="headline">ClockMaster24 <mat-icon class="time-icon">more_time</mat-icon></h1>
+      <ul>
+        <li class="point">Digitale Zeiterfassung über Desktop</li>
+        <li class="point">Mitarbeitende erfassen ihre Zeiten selbst</li>
+        <li class="point">Die Führungskraft oder Personalabteilung erstellt Arbeitspakete</li>
+      </ul>
+      <button *ngIf="!this.isLoggedIn" mat-raised-button class="login-button" (click)="login()">
+        <span>Jetzt kostenlos anmelden</span>
+      </button>
+    </div>
+  </div>
+</div>

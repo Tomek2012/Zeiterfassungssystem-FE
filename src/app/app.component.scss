@@ -1,0 +1,32 @@
+.sidenav-container {
+  height: 94%;
+}
+
+.sidenav-menu {
+  /* width: 11%; */
+  /* background-color: #f4f3f3; */
+  background-color: #ffffff;
+}
+
+.menu-item {
+  margin-left: 8px;
+}
+
+.home-icon {
+  margin-top: 8px;
+  margin-right: 5px;
+  position: relative;
+  top: 4px;
+}
+
+.mat-list-item.active {
+  color: red;
+}
+
+.info-icon {
+  margin-top: 8px;
+  margin-left: 5px;
+  position: relative;
+  top: 4px;
+  transform: scale(0.8);
+}

@@ -1,0 +1,45 @@
+.timebar-component {
+  background-color: #ffffff;
+  border: 0.1px solid lightgray;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 1px;
+  display: inline-block
+}
+
+.timepicker-fields {
+  display: flex;
+  margin-top: 1%;
+  float: left;
+}
+
+.timepicker-from {
+  margin-left: 20px;
+  width: 140px;
+}
+
+.timepicker-to {
+  margin-left: 20px;
+  width: 140px;
+}
+
+.form-field {
+  margin-top: 10px;
+  margin: 1%;
+  width: 100px;
+}
+
+.project-form-field {
+  width: auto;
+}
+
+.description-form-field {
+  width: 30%;
+}
+
+.delete-button {
+  margin-top: 18px;
+  margin-right: 2%;
+  float: right;
+  background-color: #f44a3e;
+}
